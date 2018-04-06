@@ -3,3 +3,5 @@ Create a restaurant menu app where users can add, edit, and delete restaurants a
 
 ## Requirements
 ## Installation
+### Credits
+Photo by Andrew Seaman on Unsplash
