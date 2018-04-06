@@ -1,2 +1,5 @@
 # Item-Catalog
-FSND Project
+Create a restaurant menu app where users can add, edit, and delete restaurants and menu items in the restaurants.
+
+## Requirements
+## Installation
