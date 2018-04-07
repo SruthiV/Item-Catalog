@@ -1,0 +1,40 @@
+body {
+  font-family: "Lato", sans-serif;
+  color: #2d3c49;
+  font-weight: 300;
+}
+
+hr {
+  border: solid 2px #7d97ad !important;
+}
+
+.text-muted {
+  color: #7d97ad;
+}
+
+.title-super {
+  font-size: 50px;
+}
+
+.logo {
+  width: 100px;
+  margin-top: 15px;
+}
+
+.mainimage {
+  width: 1140px;
+}
+
+.fa {
+  color: #696969;
+}
+
+footer ul li {
+  margin: 20px;
+  display: inline-flex;
+}
+
+footer ul {
+  padding: 10px;
+  text-align: center;
+}
