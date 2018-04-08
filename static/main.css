@@ -1,40 +1,21 @@
-body {
-  font-family: "Lato", sans-serif;
-  color: #2d3c49;
-  font-weight: 300;
-}
+body           { font-family: Tahoma; background-color: #333333; background-image: url('bg5.jpg') ; background-position: center; background-size: cover};
+h1               {font-family: Tahoma; color: #7B895B }
+h1, h2, h3, h4       { color: #FA8072;  font-weight: bold;}
+h2          { font-family: 'Georgia', serif; margin: 0; }
+h2              { font-size: 1.2em; }
 
-hr {
-  border: solid 2px #7d97ad !important;
-}
 
-.text-muted {
-  color: #7d97ad;
-}
+p               { color: #BEA42E;}
 
-.title-super {
-  font-size: 50px;
-}
+a {text-decoration: none; color:#AB3E16; font-size: .75em;}
 
-.logo {
-  width: 100px;
-  margin-top: 15px;
-}
+.pane {position:absolute;  border: 2px solid; opacity: 0.8;
+    filter: alpha(opacity=60);
+    border-radius: 25px; padding: 20px; padding-top: 5px; margin: 5px; border-color: #000000; background-color: #ffffff; }
+.header         {left:50%; text-align: center;}
+.name {width:50%;display: inline-block; float: left;}
+.description {}
+.price {text-align: right; width:50%; float: right; }
+.editdeletepane{}
 
-.mainimage {
-  width: 1140px;
-}
-
-.fa {
-  color: #696969;
-}
-
-footer ul li {
-  margin: 20px;
-  display: inline-flex;
-}
-
-footer ul {
-  padding: 10px;
-  text-align: center;
-}
+.flash          { background: #cee5F5; }
