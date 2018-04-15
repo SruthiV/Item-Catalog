@@ -5,6 +5,8 @@
 </head>
 
 <body>
+{% include "nav.html" %}
+{% include "flash.html" %}
   <div class="pane">
 <form action= "{{url_for('editMenuItem', restaurant_id = restaurant_id, menu_id=item.id)}}" method = 'POST'>
 
