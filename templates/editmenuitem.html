@@ -5,15 +5,19 @@
 </head>
 
 <body>
+  <div class="pane">
 <form action= "{{url_for('editMenuItem', restaurant_id = restaurant_id, menu_id=item.id)}}" method = 'POST'>
 
 <p>Name:</p>
   <input type = 'text' size='30' name = 'name' placeholder = '{{item.name}}'>
+<p>Description:</p>
+  <input type ='text' size='30' name='description' placeholder = '{{item.description}}'>
 <p>Price:</p>
   <input type ='text' size='30' name='price' placeholder = '{{item.price}}'>
 
 <input type='submit' value='Edit'>
 </form>
 <a href= '{{url_for('restaurantMenu', restaurant_id= item.restaurant_id)}}'>Cancel</a>
+</div>
 </body>
 </html>
