@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from database_setup import Restaurant, Base, MenuItem
+from database_setup import Restaurant, Base, MenuItem, User
 
 engine = create_engine('sqlite:///restaurantmenu.db')
 # Bind the engine to the metadata of the Base class so that the
@@ -18,52 +18,55 @@ DBSession = sessionmaker(bind=engine)
 # session.rollback()
 session = DBSession()
 
+# Create dummy user
+User1 = User(name="admin", email="vinukonda.sruthi@gmail.com")
+session.add(User1)
+session.commit()
 
-
-#Menu for UrbanBurger
-restaurant1 = Restaurant(name = "Rajula's Kitchen")
+# Menu for Rajula's Kitchen
+restaurant1 = Restaurant(name = "Rajula's Kitchen", user_id = "1")
 
 session.add(restaurant1)
 session.commit()
 
-menuItem2 = MenuItem(name = "Sambar Idly", description = "Juicy grilled veggie patty with tomato mayo and lettuce", price = "$7.50",  restaurant = restaurant1)
-
-session.add(menuItem2)
-session.commit()
-
-
-menuItem1 = MenuItem(name = "Masala Dosa", description = "with garlic and parmesan", price = "$2.99", restaurant = restaurant1)
+menuItem1 = MenuItem(name = "Masala Dosa", description = "South Indian, fermented crepe made from rice batter and black lentils.", price = "$2.99", restaurant = restaurant1, user_id = 1)
 
 session.add(menuItem1)
 session.commit()
 
-menuItem2 = MenuItem(name = "Pongal", description = "Juicy grilled chicken patty with tomato mayo and lettuce", price = "$5.50", restaurant = restaurant1)
+menuItem2 = MenuItem(name = "Sambar Idly", description = " Rice cake with lentil-based vegetable stew.", price = "$7.50",  restaurant = restaurant1, user_id = 1)
 
 session.add(menuItem2)
 session.commit()
 
 
-#Menu for Super Stir Fry
-restaurant2 = Restaurant(name = "Biryani Pot")
-
-session.add(restaurant2)
-session.commit()
-
-
-menuItem1 = MenuItem(name = "Veg Biryani", description = "With your choice of noodles vegetables and sauces", price = "$7.99", restaurant = restaurant2)
-
-session.add(menuItem1)
-session.commit()
-
-menuItem2 = MenuItem(name = "Avakai Biryani", description = " A famous duck dish from Beijing[1] that has been prepared since the imperial era. The meat is prized for its thin, crisp skin, with authentic versions of the dish serving mostly the skin and little meat, sliced in front of the diners by the cook", price = "$25",  restaurant = restaurant2)
-
-session.add(menuItem2)
-session.commit()
-
-menuItem3 = MenuItem(name = "Gongura Biryani", description = "Seared rare ahi, avocado, edamame, cucumber with wasabi soy sauce ", price = "15", restaurant = restaurant2)
+menuItem3 = MenuItem(name = "Pongal", description = "South indian porridge made with rice and yellow moong lentils. ", price = "$5.50", restaurant = restaurant1, user_id = 1)
 
 session.add(menuItem3)
 session.commit()
 
 
-print "added menu items!"
+#Menu for Super Stir Fry
+restaurant2 = Restaurant(name = "Biryani Pot", user_id = "1")
+
+session.add(restaurant2)
+session.commit()
+
+
+menuItem1 = MenuItem(name = "Veg Biryani", description = "Rice dish layered with vegetables.", price = "$7.99", restaurant = restaurant2, user_id = 1)
+
+session.add(menuItem1)
+session.commit()
+
+menuItem2 = MenuItem(name = "Avakai Biryani", description = "Rice dish layered with vegetables and mango pickle.", price = "$25",  restaurant = restaurant2, user_id = 1)
+
+session.add(menuItem2)
+session.commit()
+
+menuItem3 = MenuItem(name = "Gongura Biryani", description = "Rice dish layered with vegetables and chutney made with Sorrel leaves. ", price = "$15", restaurant = restaurant2, user_id = 1)
+
+session.add(menuItem3)
+session.commit()
+
+
+print "Added menu items!"
