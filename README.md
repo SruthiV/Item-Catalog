@@ -37,19 +37,20 @@ $ Python project.py
 10. Open the browser and go to http://localhost:5000
 
 ### JSON endpoints
+#### Returns JSON of all restaurants
+
 ```
 /restaurants/JSON
 ```
-Returns JSON of all restaurants
+#### Returns JSON of specific menu item
 
 ```
 /restaurants/<int:restaurant_id>/menu/<int:menu_id>/JSON
 ```
-Returns JSON of specific menu item
+#### Returns JSON of menu
 
 ```
 /restaurants/<int:restaurant_id>/menu/JSON
 ```
-Returns JSON of menu
 ### Credits
 Photo by Redd Angelo on Unsplash
