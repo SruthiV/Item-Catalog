@@ -1,9 +1,11 @@
-from flask import Flask, render_template, url_for, request, redirect, flash, jsonify, make_response
+from flask import Flask, render_template, url_for, request
+from flask import redirect, flash, jsonify, make_response
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Restaurant, MenuItem, User
 from flask import session as login_session
-import random, string
+import random
+import string
 from oauth2client.client import flow_from_clientsecrets
 from oauth2client.client import FlowExchangeError
 import json
@@ -26,6 +28,8 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 # Create anti-forgery state token
+
+
 @app.route('/login')
 def showLogin():
     state = ''.join(
@@ -34,6 +38,8 @@ def showLogin():
     return render_template('login.html', STATE=state)
 
 # GConnect
+
+
 @app.route('/gconnect', methods=['POST'])
 def gconnect():
     # Validate state token
@@ -124,8 +130,9 @@ def gconnect():
     output += ' " style = "width: 300px; height: 300px;border-radius: 150px;-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '
     flash("you are now logged in as %s" % login_session['username'])
     return output
-
     # User Helper Functions
+
+
 def createUser(login_session):
     newUser = User(name=login_session['username'], email=login_session[
                    'email'], picture=login_session['picture'])
@@ -147,6 +154,7 @@ def getUserID(email):
     except:
         return None
 
+
 @app.route('/gdisconnect')
 def gdisconnect():
         # Only disconnect a connected user.
@@ -167,7 +175,8 @@ def gdisconnect():
         del login_session['email']
         del login_session['picture']
 
-        # response = make_response(json.dumps('Successfully disconnected.'), 200)
+        # response = make_response(
+        # json.dumps('Successfully disconnected.'), 200)
         # response.headers['Content-Type'] = 'application/json'
         response = redirect(url_for('showRestaurants'))
         flash("You are now logged out.")
@@ -178,7 +187,6 @@ def gdisconnect():
             json.dumps('Failed to revoke token for given user.', 400))
         response.headers['Content-Type'] = 'application/json'
         return response
-
 
 
 # JSON API's to view information
@@ -210,6 +218,8 @@ def showRestaurants():
     return render_template('restaurants.html', restaurants=restaurants)
 
 # Create new restaurant
+
+
 @app.route('/restaurants/new/', methods=['GET', 'POST'])
 def newRestaurant():
     if 'username' not in login_session:
@@ -226,12 +236,12 @@ def newRestaurant():
         return render_template('newRestaurant.html')
 
 # Edit restaurant
+
+
 @app.route('/restaurants/<int:restaurant_id>/edit/', methods=['GET', 'POST'])
 def editRestaurant(restaurant_id):
     if 'username' not in login_session:
         return redirect('/login')
-
-
     editedRestaurant = session.query(
         Restaurant).filter_by(id=restaurant_id).one()
     if request.method == 'POST':
@@ -243,6 +253,8 @@ def editRestaurant(restaurant_id):
             'editRestaurant.html', restaurant=editedRestaurant)
 
 # Delete restaurant
+
+
 @app.route('/restaurants/<int:restaurant_id>/delete/', methods=['GET', 'POST'])
 def deleteRestaurant(restaurant_id):
     if 'username' not in login_session:
@@ -261,16 +273,20 @@ def deleteRestaurant(restaurant_id):
             'deleteRestaurant.html', restaurant=restaurantToDelete)
 
 # Show restaurant menu
+
+
 @app.route('/restaurants/<int:restaurant_id>/')
 @app.route('/restaurants/<int:restaurant_id>/menu/')
-
 def restaurantMenu(restaurant_id):
     restaurant = session.query(Restaurant).filter_by(id=restaurant_id).one()
-    items = session.query(MenuItem).filter_by(restaurant_id=restaurant_id).all()
+    items = session.query(MenuItem).filter_by(
+                                              restaurant_id=restaurant_id).all()
     return render_template(
         'menu.html', restaurant=restaurant, items=items)
 
 # Create new menu item
+
+
 @app.route(
     '/restaurants/<int:restaurant_id>/menu/new/', methods=['GET', 'POST'])
 def newMenuItem(restaurant_id):
@@ -280,27 +296,26 @@ def newMenuItem(restaurant_id):
         session = connect_to_database()
 
     if request.method == 'POST':
-        newItem = MenuItem(name=request.form['name'], description=request.form['description'],
-                           price=request.form['price'], restaurant_id=restaurant_id)
+        newItem = MenuItem(name=request.form['name'],
+                           description=request.form['description'],
+                           price=request.form['price'],
+                           restaurant_id=restaurant_id)
         session.add(newItem)
         session.commit()
         flash("Menu Item has been added")
-
-
         return redirect(url_for('restaurantMenu', restaurant_id=restaurant_id))
     else:
         return render_template('newmenuitem.html', restaurant_id=restaurant_id)
-
     return render_template('newMenuItem.html', restaurant=restaurant)
 
 # Edit menu item
+
+
 @app.route('/restaurants/<int:restaurant_id>/<int:menu_id>/edit/',
-            methods=['GET', 'POST'])
+           methods=['GET', 'POST'])
 def editMenuItem(restaurant_id, menu_id):
     if 'username' not in login_session:
         return redirect('/login')
-
-
     editedItem = session.query(MenuItem).filter_by(id=menu_id).one()
     if request.method == 'POST':
         if request.form['name']:
@@ -316,16 +331,17 @@ def editMenuItem(restaurant_id, menu_id):
         return redirect(url_for('restaurantMenu', restaurant_id=restaurant_id))
     else:
         return render_template(
-            'editmenuitem.html', restaurant_id=restaurant_id, menu_id=menu_id, item=editedItem)
+            'editmenuitem.html', restaurant_id=restaurant_id,
+            menu_id=menu_id, item=editedItem)
 
 # Delete menu item
+
+
 @app.route('/restaurants/<int:restaurant_id>/<int:menu_id>/delete/',
            methods=['GET', 'POST'])
 def deleteMenuItem(restaurant_id, menu_id):
     if 'username' not in login_session:
         return redirect('/login')
-
-
     itemToDelete = session.query(MenuItem).filter_by(id=menu_id).one()
     if request.method == 'POST':
         session.delete(itemToDelete)
@@ -339,4 +355,4 @@ def deleteMenuItem(restaurant_id, menu_id):
 if __name__ == '__main__':
     app.secret_key = 'super_secret_key'
     app.debug = True
-    app.run(host = '0.0.0.0', port = 5000)
+    app.run(host='0.0.0.0', port=5000)
