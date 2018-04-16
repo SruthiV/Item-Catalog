@@ -225,7 +225,6 @@ def newRestaurant():
     if 'username' not in login_session:
         return redirect('/login')
 
-        session = connect_to_database()
 
     if request.method == 'POST':
         newRestaurant = Restaurant(name=request.form['name'])
@@ -240,37 +239,36 @@ def newRestaurant():
 
 @app.route('/restaurants/<int:restaurant_id>/edit/', methods=['GET', 'POST'])
 def editRestaurant(restaurant_id):
+    editedRestaurant = session.query(Restaurant).filter_by(id=restaurant_id).one()
     if 'username' not in login_session:
         return redirect('/login')
-    editedRestaurant = session.query(
-        Restaurant).filter_by(id=restaurant_id).one()
+    if editedRestaurant.user_id != login_session['user_id']:
+        return "<script>{alert('Unauthorized');}</script>"
     if request.method == 'POST':
         if request.form['name']:
             editedRestaurant.name = request.form['name']
+            flash('Restaurant Successfully Edited %s' % editedRestaurant.name)
             return redirect(url_for('showRestaurants'))
     else:
-        return render_template(
-            'editRestaurant.html', restaurant=editedRestaurant)
+        return render_template('editRestaurant.html', restaurant=editedRestaurant)
 
 # Delete restaurant
 
 
 @app.route('/restaurants/<int:restaurant_id>/delete/', methods=['GET', 'POST'])
 def deleteRestaurant(restaurant_id):
+    restaurantToDelete = session.query(Restaurant).filter_by(id=restaurant_id).one()
     if 'username' not in login_session:
         return redirect('/login')
-
-        session = connect_to_database()
-
-    restaurantToDelete = session.query(
-        Restaurant).filter_by(id=restaurant_id).one()
+    if restaurantToDelete.user_id != login_session['user_id']:
+        return "<script>{alert('Unauthorized');}</script>"
     if request.method == 'POST':
         session.delete(restaurantToDelete)
+        flash('%s Successfully Deleted' % restaurantToDelete.name)
         session.commit()
         return redirect(url_for('showRestaurants'))
     else:
-        return render_template(
-            'deleteRestaurant.html', restaurant=restaurantToDelete)
+        return render_template('deleteRestaurant.html', restaurant=restaurantToDelete)
 
 # Show restaurant menu
 
