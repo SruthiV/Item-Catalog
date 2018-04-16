@@ -38,7 +38,8 @@ session.add(menuItem1)
 session.commit()
 
 menuItem2 = MenuItem(name="Sambar Idly",
-                     description=" Rice cake with lentil-based vegetable stew.",
+                     description=" Rice cake with"
+                     "lentil-based vegetable stew.",
                      price="$7.50",  restaurant=restaurant1, user_id=1)
 
 session.add(menuItem2)
