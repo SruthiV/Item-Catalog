@@ -56,7 +56,7 @@ session.commit()
 
 
 # Menu for Biryani Pot
-restaurant2 = Restaurant(name="Biryani Pot", user_id="1")
+restaurant2 = Restaurant(name="Biryani Pot")
 
 session.add(restaurant2)
 session.commit()
@@ -64,7 +64,7 @@ session.commit()
 
 menuItem1 = MenuItem(name="Veg Biryani",
                      description="Rice dish layered with vegetables.",
-                     price="$7.99", restaurant=restaurant2, user_id=1)
+                     price="$7.99", restaurant=restaurant2)
 
 session.add(menuItem1)
 session.commit()
@@ -72,7 +72,7 @@ session.commit()
 menuItem2 = MenuItem(name="Avakai Biryani",
                      description="Rice dish"
                      "layered with vegetables and mango pickle.",
-                     price="$25",  restaurant=restaurant2, user_id=1)
+                     price="$25",  restaurant=restaurant2)
 
 session.add(menuItem2)
 session.commit()
@@ -80,7 +80,7 @@ session.commit()
 menuItem3 = MenuItem(name="Gongura Biryani",
                      description="Rice dish with veggies and chutney"
                      "made with Sorrel leaves.",
-                     price="$15", restaurant=restaurant2, user_id=1)
+                     price="$15", restaurant=restaurant2)
 
 session.add(menuItem3)
 session.commit()
