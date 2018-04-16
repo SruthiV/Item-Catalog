@@ -33,7 +33,7 @@ session = DBSession()
 @app.route('/login')
 def showLogin():
     state = ''.join(random.choice(string.ascii_uppercase + string.digits)
-                                  for x in xrange(32))
+                    for x in xrange(32))
     login_session['state'] = state
     return render_template('login.html', STATE=state)
 
